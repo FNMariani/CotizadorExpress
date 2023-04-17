@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <string>
+#include "Quote.h"
 
 class Seller
 {
@@ -8,7 +9,7 @@ class Seller
     
 protected:
     int sellerCode;
-    Quote[] QuotesHistory;
+    Quote QuotesHistory[];
     
 public:
     
