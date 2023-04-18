@@ -9,8 +9,8 @@ class Seller
     
 protected:
     int sellerCode;
-    Quote QuotesHistory[];
+    //Quote QuotesHistory[];
     
 public:
-    
+    Seller(std::string name, std::string surname, int sellerCode);
 };

@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClCompile Include="CotizadorExpress.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Pant.cpp" />
     <ClCompile Include="Quote.cpp" />
     <ClCompile Include="Seller.cpp" />
@@ -166,7 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Item.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="Pant.h" />
     <ClInclude Include="Quote.h" />
     <ClInclude Include="Seller.h" />
