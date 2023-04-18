@@ -1,12 +1,19 @@
 ﻿#pragma once
 #include <string>
 
-class View
+#include "IView.h"
+#include "Presenter.h"
+
+class View : public IView
 {
+private:
+    Presenter* presenter;
+    void showMainMenu();
+    
 public:
     View();
+    ~View() override;
     
-    void showMainMenu();
     void checkHistoryOption(const std::string& option, bool& exitCondition);
     void showHistoryMenu();
     void checkSleeveOption(const std::string& option, bool& exitCondition);
