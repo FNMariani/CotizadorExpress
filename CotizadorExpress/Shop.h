@@ -16,24 +16,35 @@ private:
     Seller* seller;
 
     Item* dummy;
+    Quote* tempQuote;
+
+    int quoteId = 0;
     
 public:
     Shop(std::string name, std::string address);
     std::vector<Item> itemsToSell;
     
-    float CalculatePrice(Item* item);
+    std::string GetName() const {return name;}
+    std::string GetAddress() const {return address;}
     
-    std::string GetName() {return name;}
-    std::string GetAddress() {return address;}
+    int GetQuoteId() const {return quoteId;}
+    void IncreseQuoteId() {quoteId++;}
     
-    Seller* GetSeller() {return seller;}
+    Seller* GetSeller() const {return seller;}
   
     void CreateTestingData();
     void CreateTestingSeller();
     
     void CreateDummy(std::string dummyType);
     
-    Item* GetDummy() {return dummy;}
-    Shirt* GetDummyCastShirt() {return dynamic_cast<Shirt*>(dummy);}
-    Pant* GetDummyCastPant() {return dynamic_cast<Pant*>(dummy);}
+    Item* GetDummy() const {return dummy;}
+    Shirt* GetDummyCastShirt() const {return dynamic_cast<Shirt*>(dummy);}
+    Pant* GetDummyCastPant() const {return dynamic_cast<Pant*>(dummy);}
+    
+    Quote* GetTempQuote() const {return tempQuote;}
+    void CreateTempQuote();
+
+    std::string GetItemInfo() const;
+    
+    int GetStockFromItem(std::string itemToFind) const;
 };

@@ -23,6 +23,12 @@ std::string Presenter::GetShopAddress() const
     return shop->GetAddress();
 }
 
+void Presenter::CreateTempQuote()
+{
+    shop->IncreseQuoteId();
+    shop->CreateTempQuote();
+}
+
 void Presenter::CreateShirtDummy()
 {
     shop->CreateDummy("Shirt");
@@ -31,4 +37,9 @@ void Presenter::CreateShirtDummy()
 void Presenter::CreatePantDummy()
 {
     shop->CreateDummy("Pant");
+}
+
+std::vector<Quote*>& Presenter::GetQuotesHistory()
+{
+    return shop->GetSeller()->GetQuotesHistory();
 };

@@ -17,6 +17,10 @@ public:
     std::string GetShopName() const;
     std::string GetShopAddress() const;
     
+    void CreateTempQuote();
+
     void CreateShirtDummy();
     void CreatePantDummy();
+    
+    std::vector<Quote*> &GetQuotesHistory();
 };

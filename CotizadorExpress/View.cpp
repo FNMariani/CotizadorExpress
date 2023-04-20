@@ -73,17 +73,23 @@ void View::showHistoryMenu()
         std::cout << "Presiona 3 para volver al menu principal" << std::endl;
         std::cout << "-------------------------------------------------------" << std::endl;
 
-        /*m_presenter->getListOfWeaponMenuItems();
-
-        for (const auto& item : m_weaponMenuItems)
+        auto quotesHistory = presenter->GetQuotesHistory();
+        
+        for (const auto& quote : quotesHistory)
         {
-            const auto* weapon = m_weaponMenuItems[item.first];
-            std::string weaponName = weapon->getName();
-            auto numberOfItem = (int)item.first;
-            std::string  str_numberOfItem = std::to_string(numberOfItem);
-            std::string menuItem = str_numberOfItem + "- " + weaponName; // construímos el ítem/opción de menú (por ejemplo: "2- Rifle")
-            showText(menuItem.c_str());
-        }*/
+            std::cout << "Numero de identificacion: " << quote->GetIdNumber() << std::endl;
+            std::cout << "Fecha y Hora de la cotizacion: " << quote->GetDate() << std::endl;
+            std::cout << "Codigo del Vendedor: " << quote->sellerCode << std::endl;
+            std::cout << "Prenda cotizada: " << quote->GetListedItem()->GetItemInfo() << std::endl;
+            std::cout << "Precio Unitario: " << quote->GetListedItem()->unitPrice << std::endl;
+            std::cout << "Cantidad de unidades cotizadas: " << presenter->GetShop()->GetTempQuote()->quantity << std::endl;
+            std::cout << "Precio Final: " << quote->totalPrice << std::endl;
+            std::cout << "" << std::endl;
+        }
+        
+        std::cout << "-------------------------------------------------------" << std::endl;
+        std::cout << "Presiona 3 para volver al menu principal" << std::endl;
+        std::cout << "-------------------------------------------------------" << std::endl;
 
         std::cin >> option;
 
@@ -297,6 +303,20 @@ void View::showQualityMenu()
     } while (!exitCondition);
 }
 
+void View::checkUnitPriceInput(const std::string& option, bool& exitCondition)
+{
+    if (option == "3")
+    {
+        std::cout.flush();
+    }
+    else
+    {
+        presenter->GetShop()->GetDummy()->unitPrice = std::stof(option);
+    }
+    
+    exitCondition = true;
+}
+
 void View::showUnitPriceMenu()
 {
     std::string option;
@@ -309,18 +329,32 @@ void View::showUnitPriceMenu()
         std::cout << "-------------------------------------------------------" << std::endl;
         std::cout << "Presiona 3 para volver al menu principal" << std::endl;
         std::cout << "-------------------------------------------------------" << std::endl;
-        std::cout << "Paso 4: Ingrese el precio unitario de la prenda a cotizar " << std::endl;
+        std::cout << "Paso 4: Ingrese el precio unitario de la prenda a cotizar (con un decimal al menos. Ej.: 10.5)" << std::endl;
         std::cout << std::endl;
 
         std::cin >> option;
         
-        presenter->GetShop()->GetDummy()->unitPrice = std::stof(option);
-        
-        //TODO \/
-        //checkUnitPriceInput(option, exitCondition);
-        exitCondition = true;
+        checkUnitPriceInput(option, exitCondition);
         
     } while (!exitCondition);
+}
+
+void View::checkQuantityInput(const std::string& option, int stockToCompare, bool& exitCondition)
+{
+    int optionInt = std::stoi(option);
+    
+    if(optionInt <= stockToCompare)
+    {
+        presenter->GetShop()->GetTempQuote()->quantity = optionInt;
+        exitCondition = true;
+    }
+    else
+    {
+        std::cout << "ERROR: Valor a cotizar mayor al stock actual, intente nuevamente..." << std::endl;
+        std::cin.get();
+        std::cin.get();
+        exitCondition = false;
+    }
 }
 
 void View::showQuantityMenu()
@@ -332,13 +366,16 @@ void View::showQuantityMenu()
     {
         std::system("cls");
         std::cout << "COTIZADOR EXPRESS - COTIZAR" << std::endl;
-        std::cout << "-------------------------------------------------------" << std::endl;
+        /*std::cout << "-------------------------------------------------------" << std::endl;
         std::cout << "Presiona 3 para volver al menu principal" << std::endl;
-        std::cout << "-------------------------------------------------------" << std::endl;
+        std::cout << "-------------------------------------------------------" << std::endl;*/
     
         std::cout << std::endl;
         std::cout << "INFORMACION: " << std::endl;
-        std::cout << "EXISTE x CANTIDAD DE UNIDADES EN STOCK DE LA PRENDA SELECCIONADA " << std::endl;
+        
+        int stockToCompare = presenter->GetShop()->GetStockFromItem(presenter->GetShop()->GetDummy()->GetItemInfo());
+        
+        std::cout << "EXISTE " << stockToCompare << " CANTIDAD DE UNIDADES EN STOCK DE LA PRENDA SELECCIONADA " << std::endl;
         std::cout << std::endl;
     
         std::cout << "Paso 5: Ingrese la cantidad de unidades a cotizar " << std::endl;
@@ -346,11 +383,7 @@ void View::showQuantityMenu()
 
         std::cin >> option;
 
-        presenter->GetShop()->GetDummy()->stockQuantity = std::stoi(option);
-        
-        //TODO \/
-        //checkQuantityInput(option, exitCondition);
-        exitCondition = true;
+        checkQuantityInput(option, stockToCompare, exitCondition);
         
     } while (!exitCondition);
 }
@@ -379,24 +412,18 @@ void View::showResultMenu()
     {
         std::system("cls");
         std::cout << "COTIZADOR EXPRESS - COTIZAR" << std::endl;
+        
         std::cout << "-------------------------------------------------------" << std::endl;
         std::cout << "Presiona 3 para volver al menu principal" << std::endl;
         std::cout << "-------------------------------------------------------" << std::endl;
-    
-        std::cout << "Numero de identificacion: " << "TODO: adsf" << std::endl;
-
-        /*auto t = std::time(nullptr);
-        auto tm = *std::localtime(&t);
-        std::cout << std::put_time(&tm, "%d-%m-%Y %H-%M-%S") << std::endl;
         
-        std::cout << "Fecha y Hora de la cotizacion: " << std::put_time(&tm, "%d-%m-%Y %H-%M-%S") << std::endl;*/
-        
+        std::cout << "Numero de identificacion: " << presenter->GetShop()->GetQuoteId() << std::endl;
+        std::cout << "Fecha y Hora de la cotizacion: " << presenter->GetShop()->GetTempQuote()->GetDate() << std::endl;
         std::cout << "Codigo del Vendedor: " << presenter->GetShop()->GetSeller()->GetCode() << std::endl;
-        std::cout << "Prenda cotizada: " << "TODO: Mostrar caracteristicas en forma de texto" << std::endl;
+        std::cout << "Prenda cotizada: " << presenter->GetShop()->GetItemInfo() << std::endl;
         std::cout << "Precio Unitario: " << presenter->GetShop()->GetDummy()->unitPrice << std::endl;
-        std::cout << "Cantidad de unidades cotizadas: " << presenter->GetShop()->GetDummy()->stockQuantity << std::endl;
-
-        std::cout << "Precio Final: " << presenter->GetShop()->CalculatePrice(presenter->GetShop()->GetDummy()) << std::endl;
+        std::cout << "Cantidad de unidades cotizadas: " << presenter->GetShop()->GetTempQuote()->quantity << std::endl;
+        std::cout << "Precio Final: " << presenter->GetShop()->GetTempQuote()->CalculatePrice(presenter->GetShop()->GetDummy()) << std::endl;
     
         std::cout << "-------------------------------------------------------" << std::endl;
         std::cout << "Presiona 3 para volver al menu principal" << std::endl;
@@ -415,6 +442,7 @@ void View::checkQuoteOption(const std::string& option, bool& exitCondition)
     {
         std::system("cls");
 
+        presenter->CreateTempQuote();
         presenter->CreateShirtDummy();
         
         showShirtSleeveMenu();
@@ -425,6 +453,7 @@ void View::checkQuoteOption(const std::string& option, bool& exitCondition)
     {
         std::system("cls");
         
+        presenter->CreateTempQuote();
         presenter->CreatePantDummy();
         
         showPantMenu();

@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <string>
+
 #include "Item.h"
 
 enum EPantType { commonPant, chupinPant };
@@ -10,5 +12,9 @@ public:
     Pant(int stockQuantity, EQuality quality, float unitPrice, EPantType pantType);
     ~Pant() override;
 
-    EPantType pantType;    
+    EPantType pantType;
+
+    std::string GetItemInfo() override;
+
+    const char* EPantTypeToString(EPantType e);
 };

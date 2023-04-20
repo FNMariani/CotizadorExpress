@@ -24,7 +24,9 @@ public:
     void showPantMenu();
     void checkQualityOption(const std::string& option, bool& exitCondition);
     void showQualityMenu();
+    void checkUnitPriceInput(const std::string& option, bool& exitCondition);
     void showUnitPriceMenu();
+    void checkQuantityInput(const std::string& option, int stockToCompare, bool& exitCondition);
     void showQuantityMenu();
     void checkResultOption(const std::string& option, bool& exitCondition);
     void showResultMenu();

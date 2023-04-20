@@ -12,4 +12,9 @@ public:
 
     ESleeveType sleeveType;
     ENeckType neckType;
+    
+    std::string GetItemInfo() override;
+    
+    const char* EShirtSleeveTypeToString(ESleeveType e);
+    const char* EShirtNeckTypeToString(ENeckType e);
 };

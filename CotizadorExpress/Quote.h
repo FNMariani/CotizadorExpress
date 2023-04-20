@@ -6,11 +6,20 @@ class Quote
 {
     int idNumber;
     std::string date;
-    int sellerCode;
-    Item listedItem;
-    int quantity;
-    float totalPrice;
     
 public:
+    Quote(int idNumber);
+    int sellerCode;
+    int quantity;
+    float totalPrice;
+    Item* listedItem;
+
+    void UpdateDate();
     
+    float CalculatePrice(Item* item);
+
+    std::string GetDate() const {return date;}
+    int GetIdNumber() const {return idNumber;}
+    
+    Item* GetListedItem() {return listedItem;}
 };
