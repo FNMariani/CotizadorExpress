@@ -11,6 +11,11 @@ Shirt::Shirt(int stockQuantity, EQuality quality, float unitPrice, ESleeveType s
     this->neckType = neckType;
 }
 
+Shirt::~Shirt()
+{
+    
+}
+
 std::string Shirt::GetItemInfo()
 {
     std::string info = "";

@@ -9,6 +9,7 @@ class Shirt : public Item
 public:
     Shirt();
     Shirt(int stockQuantity, EQuality quality, float unitPrice, ESleeveType sleeveType, ENeckType neckType);
+    ~Shirt() override;
 
     ESleeveType sleeveType;
     ENeckType neckType;
